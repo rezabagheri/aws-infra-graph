@@ -39,41 +39,34 @@ The system is **plugin-based**, enabling independent scanners to be added increm
 ```
 aws-infra-graph/
 │
-├── core/
-│   ├── aws_cli.py          # Read-only AWS CLI abstraction
-│   ├── regions.py          # Multi-region execution engine
-│   ├── graph.py            # Generic dependency graph model
-│   ├── progress.py         # Unified progress bar manager
-│   └── risk_engine.py      # Advisory-only risk classification
+├── aws_infra_graph/
+│   ├── aws/                # AWS session & base modules
+│   ├── cli/                # CLI entrypoint
+│   ├── core/               # Graph, node, edge core models
+│   ├── output/             # JSON & Mermaid output generators
+│   └── plugins/            # Plugin registry & implementations
 │
-├── plugins/
-│   ├── target_groups/
-│   │   ├── scanner.py      # Target Group discovery
-│   │   ├── checks_elb.py   # ALB/NLB references
-│   │   ├── checks_ecs.py   # ECS references
-│   │   ├── checks_asg.py   # Auto Scaling references
-│   │   └── model.py        # TG domain model
-│   └── _template/          # Plugin template for future services
-│
-├── reports/
-│   ├── json_report.py
-│   ├── markdown_report.py
-│   └── html_report.py
-│
-├── cli.py                  # Entry point
-├── requirements.txt
-└── README.md
+├── tests/                  # Unit and integration tests
+├── pyproject.toml          # Modern Python packaging & dependencies
+├── README.md
+└── LICENSE
 ```
 
 ---
 
 ## Installation
 
-```bash
+Using `pyproject.toml` and editable install:
+
+```
 git clone https://github.com/rezabagheri/aws-infra-graph.git
 cd aws-infra-graph
-pip install -r requirements.txt
+python -m venv venv
+source venv/bin/activate
+pip install -e .
 ```
+
+> ✅ Verified on macOS with Python 3.12.5 and OpenSSL 3.6.1; scan runs without hash warnings.
 
 ---
 
@@ -81,14 +74,14 @@ pip install -r requirements.txt
 
 Run a Target Group scan:
 
-```bash
-python cli.py --plugin target_groups --region us-east-1
+```
+aws-infra-graph scan --plugin target_groups --region us-east-1
 ```
 
 Generate multiple report formats:
 
-```bash
-python cli.py --plugin target_groups --report json,markdown,html
+```
+aws-infra-graph scan --plugin target_groups --report json,mermaid
 ```
 
 ---
@@ -98,8 +91,8 @@ python cli.py --plugin target_groups --report json,markdown,html
 Each run produces:
 
 - **JSON** – machine-readable full graph
-- **Markdown** – audit-friendly reports
-- **HTML** – Bootstrap-styled interactive tables
+- **Mermaid** – visual dependency graph for Markdown
+- **Markdown / HTML** – audit-friendly interactive reports
 
 All findings are **advisory only** and must be reviewed by humans before action.
 
@@ -111,7 +104,7 @@ All findings are **advisory only** and must be reviewed by humans before action.
 - [x] Plugin architecture
 - [x] Target Group scanner
 - [x] ECS / ELB / ASG reference checks
-- [x] JSON / Markdown / HTML reporting
+- [x] JSON / Mermaid / Markdown reporting
 - [ ] CloudWatch signal correlation
 - [ ] ALB plugin
 - [ ] ECS plugin

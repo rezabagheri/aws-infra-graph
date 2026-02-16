@@ -40,9 +40,8 @@ reports/tmp/
 # ======================
 # AWS / Credentials
 # ======================
-.aws/
-credentials
-config
+*.pem
+*.key
 
 # ======================
 # Build artifacts

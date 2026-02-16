@@ -1,0 +1,51 @@
+# ======================
+# Python
+# ======================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.env
+.venv
+venv/
+ENV/
+.envrc
+
+# ======================
+# Virtual environments
+# ======================
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ======================
+# OS / Editors
+# ======================
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ======================
+# Logs & Reports
+# ======================
+*.log
+reports/output/
+reports/tmp/
+
+# ======================
+# AWS / Credentials
+# ======================
+.aws/
+credentials
+config
+
+# ======================
+# Build artifacts
+# ======================
+dist/
+build/
